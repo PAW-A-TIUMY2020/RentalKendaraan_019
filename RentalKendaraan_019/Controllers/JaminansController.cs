@@ -39,11 +39,43 @@ namespace RentalKendaraan_019.Controllers
             {
                 menu = menu.Where(x => x.NamaJaminan == ktsd);
             }
+            //untuk search data
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                menu = menu.Where(s => s.NamaJaminan.Contains(searchString));
+            }
 
+            //untuk sorting
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    menu = menu.OrderByDescending(s => s.NamaJaminan);
+                    break;
+                default:
+                    menu = menu.OrderBy(s => s.NamaJaminan);
+                    break;
+            }
 
+            //membuat pagedList
+            ViewData["CurrentSort"] = sortOrder;
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
-            return View(await _context.Jaminan.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+
+            //definisi jumlah data pada halaman
+            int pageSize = 5;
+
+            return View(await PaginatedList<Jaminan>.CreateAsync(menu.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Jaminans/Details/5

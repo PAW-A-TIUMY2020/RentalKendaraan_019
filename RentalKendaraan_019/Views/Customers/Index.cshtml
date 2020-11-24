@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RentalKendaraan_019.Models.Customer>
+﻿@model PaginatedList<RentalKendaraan_019.Models.Customer>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,6 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 @using (Html.BeginForm("Index", "Customers", FormMethod.Get))
 {
     <p>
@@ -17,23 +18,28 @@
         <input type="submit" value="Filter" />
     </p>
 }
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NamaCustomer)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Nama
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nik)
+                NIK
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Alamat)
+                Alamat
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NoHp)
+                No HP
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdGenderNavigation)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Gender
+                </a>
             </th>
             <th></th>
         </tr>
@@ -55,15 +61,10 @@
                     @Html.DisplayFor(modelItem => item.NoHp)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdGenderNavigation.IdGender)
+                    @Html.DisplayFor(modelItem => item.IdGenderNavigation.NamaGender)
                 </td>
                 <td>
-
-                    <a asp-action="Edit" asp-route-id="@item.IdCustomer">
-                        <svg width="1.5em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
-                        </svg>
-                    </a> |
+                    <a asp-action="Edit" asp-route-id="@item.IdCustomer">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.IdCustomer">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.IdCustomer">Delete</a>
                 </td>
@@ -72,14 +73,23 @@
     </tbody>
 </table>
 
-<script>
-    function alertMessage(item) {
-        if (confirm("Are you sure you want to delete this?")) {
-            $().ready(function () {
-                // $(".delete-button").click(null, DeleteItem); //DeleteItem is the callback
-                window.location.href = '@Url.Action("Delete", "Employees")/' + item;
-                return false;
-            });
-        }
-    }
-</script>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex -1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex +1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
