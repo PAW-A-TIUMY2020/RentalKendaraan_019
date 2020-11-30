@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace RentalKendaraan_019.Models.Upload
 {
-    public class FilesViewModel
+
+    public class FileDetails
     {
         public string Name { get; set; }
         public string Path { get; set; }
@@ -13,7 +14,7 @@ namespace RentalKendaraan_019.Models.Upload
 
     public class FilesViewModel
     {
-        public List<FilesDetails> Files { get; set; }
-            = new List<FilesDetails>();
+        public List<FileDetails> Files { get; set; }
+        = new List<FileDetails>();
     }
 }

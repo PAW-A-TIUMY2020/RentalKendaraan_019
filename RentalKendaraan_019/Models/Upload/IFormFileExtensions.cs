@@ -10,7 +10,7 @@ namespace RentalKendaraan_019.Models.Upload
 {
     public static class IFormFileExtensions
     {
-        public static string GetFilename(this IFormFile file)
+        public static string GetFileName(this IFormFile file)
         {
             return ContentDispositionHeaderValue.Parse(
                 file.ContentDisposition).FileName.ToString().Trim('"');
@@ -18,16 +18,16 @@ namespace RentalKendaraan_019.Models.Upload
 
         public static async Task<MemoryStream> GetFileStream(this IFormFile file)
         {
-            MemoryStream filestream = new MemoryStream();
-            await file.CopyToAsync(filestream);
-            return filestream;
+            MemoryStream fileStream = new MemoryStream();
+            await file.CopyToAsync(fileStream);
+            return fileStream;
         }
 
         public static async Task<byte[]> GetFileArray(this IFormFile file)
         {
-            MemoryStream filestream = new MemoryStream();
-            await file.CopyToAsync(filestream);
-            return filestream.ToArray();
+            MemoryStream fileStream = new MemoryStream();
+            await file.CopyToAsync(fileStream);
+            return fileStream.ToArray();
         }
     }
 }
