@@ -77,7 +77,7 @@ namespace RentalKendaraan_019.Controllers
            this.fileProvider.GetDirectoryContents(""))
             {
                 model.Files.Add(
-                new FilesDetails
+                new FileDetails
                 {
                     Name = item.Name,
                     Path =
