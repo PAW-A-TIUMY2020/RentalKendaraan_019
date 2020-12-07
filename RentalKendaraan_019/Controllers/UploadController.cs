@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
+using RentalKendaraan_019.Models.Upload;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
-using RentalKendaraan_019.Models.Upload;
 
-namespace RentalKendaraan_019.Controllers
+namespace RentalKendaraan_022.Controllers
 {
     public class UploadController : Controller
     {
@@ -126,4 +126,5 @@ namespace RentalKendaraan_019.Controllers
                 };
         }
     }
+
 }
